@@ -21,7 +21,29 @@ Both dependencies can be installed using mvn clean install.
 
 1. Clone the project on your machine using git clone https://github.com/kabinja/ukwikora-inspector
 2. Move to the directory
-3. run mvn clean install
+3. run mvn clean compile
+
+## Deployment
+
+### Generate package
+
+1. Move to the directory
+2. run mvn clean package
+
+### Configuration file
+
+    {
+        "git url": "url/of/gitlab/server",
+        "git token": "gitlab-token",
+        "git group": "name-of-group-to-extract-projects",
+        "project location": "/path/to/destination/folder",
+        "git default branch": "branch to analyze",
+        "git branch exception": "project-name#branch-name"
+    }
+
+### Running
+
+To launch the analysis run ukwikora-inspector.jar -config /path/to/config.json
 
 ## Running the tests
 
