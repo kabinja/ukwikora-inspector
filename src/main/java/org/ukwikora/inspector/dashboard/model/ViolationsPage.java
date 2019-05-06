@@ -2,7 +2,7 @@ package org.ukwikora.inspector.dashboard.model;
 
 import org.ukwikora.analytics.Violation;
 import org.ukwikora.analytics.ViolationDetection;
-import org.ukwikora.export.exception.InvalidNumberColumnException;
+import org.ukwikora.inspector.dashboard.InvalidNumberColumnException;
 import org.ukwikora.model.Project;
 
 import java.util.List;

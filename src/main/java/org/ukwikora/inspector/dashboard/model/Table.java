@@ -1,6 +1,6 @@
 package org.ukwikora.inspector.dashboard.model;
 
-import org.ukwikora.export.exception.InvalidNumberColumnException;
+import org.ukwikora.inspector.dashboard.InvalidNumberColumnException;
 
 import java.util.ArrayList;
 import java.util.List;

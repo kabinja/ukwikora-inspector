@@ -4,12 +4,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ukwikora.compiler.Compiler;
+import org.ukwikora.gitlabloader.Gitlab;
 import org.ukwikora.inspector.dashboard.StatisticsViewerGenerator;
 import org.ukwikora.model.Project;
 import org.ukwikora.utils.CommandRunner;
 import org.ukwikora.utils.Configuration;
 import org.ukwikora.utils.Plugin;
-import org.gitlabloader.api.Gitlab;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class ProjectAnalyticsCli implements CommandRunner {
         location = createTmpFolder(location);
 
         Gitlab gitlab = new Gitlab().setToken(token).setUrl(url);
-        List<org.gitlabloader.api.Project> projects = gitlab.findProjectsByGroupName(group);
+        List<org.ukwikora.gitlabloader.Project> projects = gitlab.findProjectsByGroupName(group);
         gitlab.cloneProjects(projects, location, defaultBranch, branchExceptions);
 
         return location;
