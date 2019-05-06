@@ -1,20 +1,19 @@
 package org.ukwikora.inspector.dashboard.model;
 
 import org.ukwikora.model.Project;
-import org.ukwikora.utils.JsonUtils;
 import org.ukwikora.utils.StringUtils;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DependencyPage extends Page {
-    private final List<Dependency> dependencies;
+    private final DependencyGraph dependencyGraph;
 
     public DependencyPage(String id, String name, List<Project> projects) {
         super(id, name);
 
-        this.dependencies = new ArrayList<>();
+        Set<Dependency> dependencies = new HashSet<>();
 
         for(Project target: projects){
             for(Project source: target.getDependencies()){
@@ -23,13 +22,11 @@ public class DependencyPage extends Page {
                 dependencies.add(new Dependency(sourceName, targetName, Dependency.Type.UserProject));
             }
         }
+
+        this.dependencyGraph = new DependencyGraph(id, name, dependencies);
     }
 
-    public String getJsonDependencies() throws IOException {
-        return JsonUtils.convertToJsonArray(dependencies);
-    }
-
-    public String getUrl(){
-        return String.format("js/%s.js", getId());
+    public DependencyGraph getGraph() {
+        return this.dependencyGraph;
     }
 }

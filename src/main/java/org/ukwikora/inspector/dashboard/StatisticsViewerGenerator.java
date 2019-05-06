@@ -76,12 +76,11 @@ public class StatisticsViewerGenerator {
                 "Dependency Graph", projects);
 
         input.put("dependencies", dependencies);
-        input.put("dependencyGraphUrl", dependencies.getUrl());
 
         processTemplate("dependencies.ftl", input, new File(destination, "dependencies.html"));
 
-        processTemplate("lib/dependency-graph.ftl", Collections.singletonMap("dependencies", dependencies),
-                new File(destination, dependencies.getUrl()));
+        processTemplate("lib/dependency-graph.ftl", Collections.singletonMap("chart", dependencies.getGraph()),
+                new File(destination, dependencies.getGraph().getUrl()));
     }
 
     private void generateDeadCodePage(Map<String, Object> input) throws Exception {
@@ -126,6 +125,9 @@ public class StatisticsViewerGenerator {
 
         processTemplate("lib/bar-chart.ftl", Collections.singletonMap("chart", singleProjectPage.getSequenceChart()),
                 new File(destination, singleProjectPage.getSequenceChart().getUrl()));
+
+        processTemplate("lib/dependency-graph.ftl", Collections.singletonMap("chart", singleProjectPage.getDependencyGraph()),
+                new File(destination, singleProjectPage.getDependencyGraph().getUrl()));
     }
 
     private Template getTemplate(String name) throws Exception {

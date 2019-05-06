@@ -7,9 +7,7 @@ import org.ukwikora.model.UserKeyword;
 import org.ukwikora.utils.StringUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SingleProjectPage extends Page {
     private final Link link;
@@ -23,6 +21,7 @@ public class SingleProjectPage extends Page {
     private final BarChart connectivityChart;
     private final BarChart depthChart;
     private final BarChart sequenceChart;
+    private final DependencyGraph dependencyGraph;
 
     public SingleProjectPage(Project project) throws Exception {
         super(
@@ -30,6 +29,7 @@ public class SingleProjectPage extends Page {
             StringUtils.toBeautifulName(project.getName())
          );
 
+        this.scripts = new ArrayList<>();
         this.link = new Link(project.getName());
 
         ProjectStatistics statistics = new ProjectStatistics(project);
@@ -42,12 +42,7 @@ public class SingleProjectPage extends Page {
         this.connectivityChart = createConnectivityChart(statistics);
         this.depthChart = createDepthChart(statistics);
         this.sequenceChart = createSequenceChart(statistics);
-
-        this.scripts = new ArrayList<>(4);
-        this.scripts.add(this.sizeChart.getUrl());
-        this.scripts.add(this.connectivityChart.getUrl());
-        this.scripts.add(this.depthChart.getUrl());
-        this.scripts.add(this.sequenceChart.getUrl());
+        this.dependencyGraph = createDependencies(project);
     }
 
     private BarChart createConnectivityChart(ProjectStatistics statistics) throws IOException {
@@ -63,6 +58,8 @@ public class SingleProjectPage extends Page {
 
         chart.setYLabel("Number of Keywords");
         chart.setXLabel("Number of keywords depending on the keyword");
+
+        this.scripts.add(chart.getUrl());
 
         return chart;
     }
@@ -81,6 +78,8 @@ public class SingleProjectPage extends Page {
         chart.setYLabel("Number of Keywords");
         chart.setXLabel("Longest distance to a library keyword");
 
+        this.scripts.add(chart.getUrl());
+
         return chart;
     }
 
@@ -98,6 +97,8 @@ public class SingleProjectPage extends Page {
         chart.setYLabel("Number of Test Cases");
         chart.setXLabel("Number of actions performed");
 
+        this.scripts.add(chart.getUrl());
+
         return chart;
     }
 
@@ -114,6 +115,30 @@ public class SingleProjectPage extends Page {
 
         chart.setYLabel("Number of Keywords");
         chart.setXLabel("Number of keywords composing the keyword");
+
+        this.scripts.add(chart.getUrl());
+
+        return chart;
+    }
+
+    private DependencyGraph createDependencies(Project project) {
+        Set<Dependency> dependencies = new HashSet<>();
+
+        for(Project dependency: project.getDependencies()){
+            dependencies.add(new Dependency(
+                StringUtils.toBeautifulName(dependency.getName()),
+                StringUtils.toBeautifulName(project.getName()),
+                Dependency.Type.UserProject
+            ));
+        }
+
+        DependencyGraph chart = new DependencyGraph(
+                String.format("%s-dependency-graph", getId()),
+                "Dependency Graph",
+                dependencies
+        );
+
+        this.scripts.add(chart.getUrl());
 
         return chart;
     }
@@ -148,6 +173,10 @@ public class SingleProjectPage extends Page {
 
     public BarChart getSequenceChart() {
         return sequenceChart;
+    }
+
+    public DependencyGraph getDependencyGraph() {
+        return dependencyGraph;
     }
 
     public List<String> getScripts() {

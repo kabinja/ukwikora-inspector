@@ -1,7 +1,7 @@
 <#include "lib/base.ftl">
 
 <#macro js_imports>
-        <script src="${dependencyGraphUrl}"></script>
+        <script src="${dependencies.graph.url}"></script>
 </#macro>
 
 <#macro page_content>

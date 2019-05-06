@@ -86,6 +86,20 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <!-- Area Chart -->
+            <div class="card border-0 shadow mb-4">
+                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">${project.dependencyGraph.name}</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area" id="${project.dependencyGraph.id}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </#macro>
 
 <@display_page sidebar=sidebar title=project.link.text generated_date=generated_date/>

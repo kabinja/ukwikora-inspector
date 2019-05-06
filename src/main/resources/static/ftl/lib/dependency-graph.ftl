@@ -1,4 +1,4 @@
-var links = ${dependencies.jsonDependencies};
+var links = ${chart.jsonDependencies};
 var nodes = {};
 
 // Compute the distinct nodes from the links.
@@ -7,8 +7,8 @@ links.forEach(function (link) {
     link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
 });
 
-var width = d3.select("#${dependencies.id}").node().offsetWidth;
-var height = d3.select("#${dependencies.id}").node().offsetHeight;
+var width = d3.select("#${chart.id}").node().offsetWidth;
+var height = d3.select("#${chart.id}").node().offsetHeight;
 
 var force = d3.layout.force()
     .nodes(d3.values(nodes))
@@ -19,7 +19,7 @@ var force = d3.layout.force()
     .on("tick", tick)
     .start();
 
-var svg = d3.select("#${dependencies.id}").append("svg")
+var svg = d3.select("#${chart.id}").append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("display", "block")
