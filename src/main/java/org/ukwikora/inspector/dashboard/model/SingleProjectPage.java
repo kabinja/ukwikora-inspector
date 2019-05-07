@@ -124,13 +124,7 @@ public class SingleProjectPage extends Page {
     private DependencyGraph createDependencies(Project project) {
         Set<Dependency> dependencies = new HashSet<>();
 
-        for(Project dependency: project.getDependencies()){
-            dependencies.add(new Dependency(
-                StringUtils.toBeautifulName(dependency.getName()),
-                StringUtils.toBeautifulName(project.getName()),
-                Dependency.Type.UserProject
-            ));
-        }
+        getDependencies(project, dependencies, new HashSet<>());
 
         DependencyGraph chart = new DependencyGraph(
                 String.format("%s-dependency-graph", getId()),
@@ -141,6 +135,24 @@ public class SingleProjectPage extends Page {
         this.scripts.add(chart.getUrl());
 
         return chart;
+    }
+
+    private void getDependencies(Project project, Set<Dependency> dependencies, Set<Project> memory){
+        if(memory.contains(project)){
+            return;
+        }
+
+        memory.add(project);
+
+        for(Project dependency: project.getDependencies()){
+            dependencies.add(new Dependency(
+                    StringUtils.toBeautifulName(dependency.getName()),
+                    StringUtils.toBeautifulName(project.getName()),
+                    Dependency.Type.UserProject
+            ));
+
+            getDependencies(dependency, dependencies, memory);
+        }
     }
 
     public Link getLink() {
