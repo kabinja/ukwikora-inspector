@@ -1,6 +1,10 @@
 <#include "lib/base.ftl">
 <#include "lib/table.ftl">
 
+<#macro js_imports>
+    <script src="${clones.table.url}"></script>
+</#macro>
+
 <#macro page_title>
 
 </#macro>

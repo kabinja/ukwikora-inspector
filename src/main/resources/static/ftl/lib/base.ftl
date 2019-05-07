@@ -21,14 +21,17 @@
     <title>${title}</title>
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="vendor/datatables/buttons.datatable.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
+    <link href="vendor/bootstrap/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="vendor/googleapis/fonts.css" rel="stylesheet">
+    <link href="vendor/googleapis/fonts.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template-->
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">
@@ -182,7 +185,7 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -190,6 +193,14 @@
     <!-- Table plugins-->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="vendor/datatables/dataTables.buttons.min.js"></script>
+    <script src="vendor/bootstrap/js/buttons.bootstrap4.min.js"></script>
+    <script src="vendor/jszip/jszip.min.js"></script>
+    <script src="vendor/pdfmake/pdfmake.min.js"></script>
+    <script src="vendor/pdfmake/vfs_font.js"></script>
+    <script src="vendor/datatables/buttons.html5.min.js"></script>
+    <script src="vendor/datatables/buttons.print.min.js"></script>
+    <script src="vendor/datatables/buttons.colVis.min.js"></script>
 
     <!-- Charts plugins-->
     <script src="vendor/chart.js/Chart.min.js"></script>

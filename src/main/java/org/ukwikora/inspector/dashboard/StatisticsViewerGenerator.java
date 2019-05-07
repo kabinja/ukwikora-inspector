@@ -94,8 +94,10 @@ public class StatisticsViewerGenerator {
     private void generateClonePage(Map<String, Object> input, Clones<UserKeyword> clones) throws Exception {
         ClonePage clonePage = new ClonePage("clones", "Duplicated Code", clones);
 
-        input.put("clones", clonePage);
+        input.put("data", clonePage.getTable());
+        processTemplate("lib/table-js.ftl", input, new File(destination, clonePage.getTable().getUrl()));
 
+        input.put("clones", clonePage);
         processTemplate("clones.ftl", input, new File(destination, "clones.html"));
     }
 

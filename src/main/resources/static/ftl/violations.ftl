@@ -1,8 +1,11 @@
 <#include "lib/base.ftl">
 <#include "lib/table.ftl">
 
-<#macro page_title>
+<#macro js_imports>
+    <script src="${violations.table.url}"></script>
+</#macro>
 
+<#macro page_title>
 </#macro>
 
 <#macro page_content>

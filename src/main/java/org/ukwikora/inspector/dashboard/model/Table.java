@@ -42,4 +42,8 @@ public class Table {
     public List<String[]> getRows() {
         return rows;
     }
+
+    public String getUrl() {
+        return String.format("js/%s-table.js", id);
+    }
 }
