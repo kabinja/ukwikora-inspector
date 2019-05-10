@@ -1,6 +1,5 @@
 package org.ukwikora.inspector.dashboard.model;
 
-import org.ukwikora.analytics.Clone;
 import org.ukwikora.analytics.Clones;
 import org.ukwikora.model.Project;
 import org.ukwikora.model.UserKeyword;
@@ -8,7 +7,9 @@ import org.ukwikora.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SummaryPage extends Page {
     private BarChart linesChart;
@@ -36,6 +37,8 @@ public class SummaryPage extends Page {
         List<Integer> userKeywords = new ArrayList<>(size);
         List<Integer> testCases = new ArrayList<>(size);
 
+        Set<UserKeyword> keywords = new HashSet<>();
+
         for(Project project: projects){
             linesOfCode += project.getLoc();
             numberKeywords += project.getUserKeywords().size();
@@ -52,12 +55,14 @@ public class SummaryPage extends Page {
 
             lines.add(executedLoc);
             deadLines.add(deadLoc);
+
+            keywords.addAll(project.getUserKeywords());
         }
 
         createLinesChart(labels, lines, deadLines);
         createUserKeywordsChart(labels, userKeywords);
         createTestCasesChart(labels, testCases);
-        createCloneChart(clones);
+        createCloneChart(keywords, clones);
 
         setChartsHeight();
 
@@ -106,6 +111,10 @@ public class SummaryPage extends Page {
         linesChart.setYLabel("Number Lines of Code");
     }
 
+    private void createCloneChart(Set<UserKeyword> keywords, Clones<UserKeyword> clones) throws IOException {
+        cloneChart = CloneChart.create("", keywords, clones);
+    }
+
     public BarChart getLinesChart() {
         return linesChart;
     }
@@ -145,39 +154,5 @@ public class SummaryPage extends Page {
         linesChart.setHeight(height);
         userKeywordsChart.setHeight(height);
         testCasesChart.setHeight(height);
-    }
-
-    private void createCloneChart(Clones<UserKeyword> clones) throws IOException {
-        List<Double> values = new ArrayList<>();
-        values.add(getPercentageClones(Clone.Type.TypeI, clones));
-        values.add(getPercentageClones(Clone.Type.TypeII, clones));
-        values.add(getPercentageClones(Clone.Type.TypeIII, clones));
-        values.add(getPercentageClones(Clone.Type.TypeIV, clones));
-
-        List<String> labels = new ArrayList<>();
-        labels.add("Type I");
-        labels.add("Type II");
-        labels.add("Type III");
-        labels.add("Type IV");
-
-        ChartDataset dataset = new ChartDataset("Clones", values, ChartDataset.Color.BLUE);
-
-        cloneChart = new BarChart(
-                "summary-clones-chart",
-                "Percentage of line duplicated",
-                dataset,
-                labels);
-
-        cloneChart.setYLabel("Percent");
-    }
-
-    private double getPercentageClones(Clone.Type type, Clones<UserKeyword> clones){
-        double numberOfCloneLines = 0;
-
-        for(UserKeyword keyword: clones.getClones(type)){
-            numberOfCloneLines += keyword.getLoc();
-        }
-
-        return (numberOfCloneLines / linesOfCode) * 100;
     }
 }

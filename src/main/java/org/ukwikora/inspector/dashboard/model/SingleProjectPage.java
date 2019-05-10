@@ -1,5 +1,7 @@
 package org.ukwikora.inspector.dashboard.model;
 
+import org.ukwikora.analytics.Clone;
+import org.ukwikora.analytics.Clones;
 import org.ukwikora.analytics.ProjectStatistics;
 import org.ukwikora.model.Project;
 import org.ukwikora.model.TestCase;
@@ -22,8 +24,9 @@ public class SingleProjectPage extends Page {
     private final BarChart depthChart;
     private final BarChart sequenceChart;
     private final DependencyGraph dependencyGraph;
+    private final BarChart cloneChart;
 
-    public SingleProjectPage(Project project) throws Exception {
+    public SingleProjectPage(Project project, Clones<UserKeyword> clones) throws Exception {
         super(
             StringUtils.toBeautifulUrl(project.getName(), ""),
             StringUtils.toBeautifulName(project.getName())
@@ -42,7 +45,8 @@ public class SingleProjectPage extends Page {
         this.connectivityChart = createConnectivityChart(statistics);
         this.depthChart = createDepthChart(statistics);
         this.sequenceChart = createSequenceChart(statistics);
-        this.dependencyGraph = createDependencies(project);
+        this.dependencyGraph = createDependencyGraph(project);
+        this.cloneChart = createCloneChart(project, clones);
     }
 
     private BarChart createConnectivityChart(ProjectStatistics statistics) throws IOException {
@@ -121,7 +125,7 @@ public class SingleProjectPage extends Page {
         return chart;
     }
 
-    private DependencyGraph createDependencies(Project project) {
+    private DependencyGraph createDependencyGraph(Project project) {
         Set<Dependency> dependencies = new HashSet<>();
 
         getDependencies(project, dependencies, new HashSet<>());
@@ -132,6 +136,13 @@ public class SingleProjectPage extends Page {
                 dependencies
         );
 
+        this.scripts.add(chart.getUrl());
+
+        return chart;
+    }
+
+    private BarChart createCloneChart(Project project, Clones<UserKeyword> clones) throws IOException {
+        BarChart chart = CloneChart.create(getId(), project.getUserKeywords(), clones);
         this.scripts.add(chart.getUrl());
 
         return chart;
@@ -189,6 +200,10 @@ public class SingleProjectPage extends Page {
 
     public DependencyGraph getDependencyGraph() {
         return dependencyGraph;
+    }
+
+    public BarChart getCloneChart() {
+        return cloneChart;
     }
 
     public List<String> getScripts() {

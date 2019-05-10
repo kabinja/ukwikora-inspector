@@ -39,7 +39,7 @@ public class StatisticsViewerGenerator {
         generateViolationsPage(new HashMap<>(input));
 
         for(Project project: projects){
-            generateSingleProjectPage(project, new HashMap<>(input));
+            generateSingleProjectPage(project, clones, new HashMap<>(input));
         }
     }
 
@@ -109,8 +109,8 @@ public class StatisticsViewerGenerator {
         processTemplate("violations.ftl", input, new File(destination, "violations.html"));
     }
 
-    private void generateSingleProjectPage(Project project, Map<String, Object> input) throws Exception {
-        SingleProjectPage singleProjectPage = new SingleProjectPage(project);
+    private void generateSingleProjectPage(Project project, Clones<UserKeyword> clones, Map<String, Object> input) throws Exception {
+        SingleProjectPage singleProjectPage = new SingleProjectPage(project, clones);
 
         input.put("project", singleProjectPage);
 
@@ -130,6 +130,9 @@ public class StatisticsViewerGenerator {
 
         processTemplate("lib/dependency-graph.ftl", Collections.singletonMap("chart", singleProjectPage.getDependencyGraph()),
                 new File(destination, singleProjectPage.getDependencyGraph().getUrl()));
+
+        processTemplate("lib/bar-chart.ftl", Collections.singletonMap("chart", singleProjectPage.getCloneChart()),
+                new File(destination, singleProjectPage.getCloneChart().getUrl()));
     }
 
     private Template getTemplate(String name) throws Exception {
