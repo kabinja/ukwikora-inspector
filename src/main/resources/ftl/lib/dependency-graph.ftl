@@ -62,6 +62,7 @@ function draw(){
     .data(force.nodes())
     .enter().append("circle")
     .attr("r", 6)
+    .attr("fill", "#A9A9A9")
     .call(force.drag);
 
     var text = svg.append("g").selectAll("text")

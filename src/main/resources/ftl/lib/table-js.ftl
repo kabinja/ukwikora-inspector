@@ -1,7 +1,22 @@
 $(document).ready(function() {
+    $('#${data.id} thead tr').clone(true).appendTo( '#${data.id} thead' );
+    $('#${data.id} thead tr:eq(1) th').each( function (i) {
+    var title = $(this).text();
+    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+
+    $( 'input', this ).on( 'keyup change', function () {
+        if ( table.column(i).search() !== this.value ) {
+            table
+                .column(i)
+                .search( this.value )
+                .draw();
+            }
+        } );
+    } );
+
     var table = $('#${data.id}').DataTable( {
-        lengthChange: false,
-        searching: false,
+        orderCellsTop: true,
+        fixedHeader: true,
         dom: 'Bfrtip',
         buttons: [
             { extend: 'copy', className: 'btn btn-secondary buttons-collection buttons-copy' },
@@ -13,20 +28,4 @@ $(document).ready(function() {
     } );
 
     table.buttons().container().appendTo( '#${data.id}_wrapper .col-md-6:eq(0)' );
-
-    // Setup - add a text input to each footer cell
-    $('#${data.id} thead tr').clone(true).appendTo( '#${data.id} thead' );
-    $('#${data.id} thead tr:eq(1) th').each( function (i) {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-
-        $( 'input', this ).on( 'keyup change', function () {
-            if ( table.column(i).search() !== this.value ) {
-                table
-                .column(i)
-                .search( this.value )
-                .draw();
-            }
-        } );
-    } );
 } );

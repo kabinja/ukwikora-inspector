@@ -86,8 +86,10 @@ public class StatisticsViewerGenerator {
     private void generateDeadCodePage(Map<String, Object> input) throws Exception {
         DeadCodePage deadCodePage = new DeadCodePage("dead-code", "Dead Code", projects);
 
-        input.put("deadCodePage", deadCodePage);
+        input.put("data", deadCodePage.getTable());
+        processTemplate("lib/table-js.ftl", input, new File(destination, deadCodePage.getTable().getUrl()));
 
+        input.put("deadCodePage", deadCodePage);
         processTemplate("dead-code.ftl", input, new File(destination, "dead-code.html"));
     }
 
@@ -104,8 +106,10 @@ public class StatisticsViewerGenerator {
     private void generateViolationsPage(Map<String, Object> input) throws  Exception{
         ViolationsPage violationPage = new ViolationsPage("violations", "Violations", projects);
 
-        input.put("violations", violationPage);
+        input.put("data", violationPage.getTable());
+        processTemplate("lib/table-js.ftl", input, new File(destination, violationPage.getTable().getUrl()));
 
+        input.put("violations", violationPage);
         processTemplate("violations.ftl", input, new File(destination, "violations.html"));
     }
 

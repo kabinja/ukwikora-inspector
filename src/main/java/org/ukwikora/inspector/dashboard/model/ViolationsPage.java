@@ -17,7 +17,7 @@ public class ViolationsPage extends Page{
         super(id, name);
 
         this.table = new Table(
-          "violations",
+          id,
           "Violations",
           new String[]{"Type", "Name", "File", "Lines", "Project", "Message"}
         );

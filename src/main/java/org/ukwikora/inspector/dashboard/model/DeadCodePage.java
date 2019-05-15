@@ -15,7 +15,7 @@ public class DeadCodePage extends Page {
         super(id, name);
 
         this.table = new Table(
-                "dead-code-table",
+                id,
                 "Dead Code",
                 new String[]{"Type", "Name", "File", "Lines", "Project"}
         );

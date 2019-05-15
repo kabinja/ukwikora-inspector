@@ -11,7 +11,7 @@ public class ClonePage extends Page {
         super(id, name);
 
         this.table = new Table(
-                "clones",
+                id,
                 "Duplicated Code",
                 new String[]{"Group", "Size", "Type", "Name", "File", "Lines", "Project"}
         );
