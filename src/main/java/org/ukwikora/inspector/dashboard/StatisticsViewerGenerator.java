@@ -138,7 +138,7 @@ public class StatisticsViewerGenerator {
     private Template getTemplate(String name) throws Exception {
         Configuration cfg = new Configuration();
 
-        File templateDirectory = FileUtils.getResourceFile("static/ftl");
+        File templateDirectory = FileUtils.getResourceFile("ftl");
         cfg.setDirectoryForTemplateLoading(templateDirectory);
 
         cfg.setIncompatibleImprovements(new Version(2, 3, 20));

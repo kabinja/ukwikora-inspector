@@ -1,16 +1,26 @@
-var links = ${chart.jsonDependencies};
-var nodes = {};
-
-// Compute the distinct nodes from the links.
-links.forEach(function (link) {
-    link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
-    link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
+$(document).ready(function() {
+    draw();
 });
 
-var width = d3.select("#${chart.id}").node().offsetWidth;
-var height = d3.select("#${chart.id}").node().offsetHeight;
+$( window ).resize(function() {
+    d3.select("#${chart.id} svg").remove();
+    draw();
+});
 
-var force = d3.layout.force()
+function draw(){
+    var links = ${chart.jsonDependencies};
+    var nodes = {};
+
+    // Compute the distinct nodes from the links.
+    links.forEach(function (link) {
+    link.source = nodes[link.source] || (nodes[link.source] = { name: link.source });
+    link.target = nodes[link.target] || (nodes[link.target] = { name: link.target });
+    });
+
+    var width = d3.select("#${chart.id}").node().offsetWidth;
+    var height = d3.select("#${chart.id}").node().offsetHeight;
+
+    var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
@@ -19,7 +29,7 @@ var force = d3.layout.force()
     .on("tick", tick)
     .start();
 
-var svg = d3.select("#${chart.id}").append("svg")
+    var svg = d3.select("#${chart.id}").append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("display", "block")
@@ -28,8 +38,8 @@ var svg = d3.select("#${chart.id}").append("svg")
     .attr("left", 0);
 
 
-// Per-type markers, as they don't inherit styles.
-svg.append("defs").selectAll("marker")
+    // Per-type markers, as they don't inherit styles.
+    svg.append("defs").selectAll("marker")
     .data(["UserProject", "Library"])
     .enter().append("marker")
     .attr("id", function (d) { return d; })
@@ -42,39 +52,40 @@ svg.append("defs").selectAll("marker")
     .append("path")
     .attr("d", "M0,-5L10,0L0,5");
 
-var path = svg.append("g").selectAll("path")
+    var path = svg.append("g").selectAll("path")
     .data(force.links())
     .enter().append("path")
     .attr("class", function (d) { return "graph-link " + d.type; })
     .attr("marker-end", function (d) { return "url(#" + d.type + ")"; });
 
-var circle = svg.append("g").selectAll("circle")
+    var circle = svg.append("g").selectAll("circle")
     .data(force.nodes())
     .enter().append("circle")
     .attr("r", 6)
     .call(force.drag);
 
-var text = svg.append("g").selectAll("text")
+    var text = svg.append("g").selectAll("text")
     .data(force.nodes())
     .enter().append("text")
     .attr("x", 8)
     .attr("y", ".31em")
     .text(function (d) { return d.name; });
 
-// Use elliptical arc path segments to doubly-encode directionality.
-function tick() {
+    // Use elliptical arc path segments to doubly-encode directionality.
+    function tick() {
     path.attr("d", linkArc);
     circle.attr("transform", transform);
     text.attr("transform", transform);
-}
+    }
 
-function linkArc(d) {
+    function linkArc(d) {
     var dx = d.target.x - d.source.x,
     dy = d.target.y - d.source.y,
     dr = Math.sqrt(dx * dx + dy * dy);
     return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-}
+    }
 
-function transform(d) {
+    function transform(d) {
     return "translate(" + d.x + "," + d.y + ")";
+    }
 }
