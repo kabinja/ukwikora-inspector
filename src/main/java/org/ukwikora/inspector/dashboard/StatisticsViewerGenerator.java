@@ -53,8 +53,11 @@ public class StatisticsViewerGenerator {
         input.put("summaryPage", summaryPage);
         processTemplate("summary.ftl", input, new File(destination, "index.html"));
 
-        processTemplate("lib/bar-chart.ftl", Collections.singletonMap("chart", summaryPage.getLinesChart()),
-                new File(destination, summaryPage.getLinesChart().getUrl()));
+        processTemplate("lib/bar-chart.ftl", Collections.singletonMap("chart", summaryPage.getDeadCodeChart()),
+                new File(destination, summaryPage.getDeadCodeChart().getUrl()));
+
+        processTemplate("lib/bar-chart.ftl", Collections.singletonMap("chart", summaryPage.getDuplicatedChart()),
+                new File(destination, summaryPage.getDuplicatedChart().getUrl()));
 
         processTemplate("lib/bar-chart.ftl",  Collections.singletonMap("chart", summaryPage.getUserKeywordsChart()),
                 new File(destination, summaryPage.getUserKeywordsChart().getUrl()));
