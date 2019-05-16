@@ -12,21 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class StatisticsViewerGeneratorTest {
     @Test
-    public void checkCopyResource(){
-        File destination = Globals.getNewTmpFolder("ukwikora-copy-resources-test");
-
-        try {
-            StatisticsViewerGenerator generator = new StatisticsViewerGenerator(Collections.emptyList(), destination);
-            generator.copyResources();
-        } catch (Exception e) {
-            fail("exception was raised: " + e.getMessage());
-        }
-
-        assertTrue(destination.exists());
-        Globals.deleteDirectory(destination);
-    }
-
-    @Test
     public void checkSiteGeneration(){
         try {
             String[] paths = {
@@ -36,7 +21,7 @@ public class StatisticsViewerGeneratorTest {
             };
 
             List<Project> projects = Globals.compileProjects(paths);
-            File destination = Globals.getNewTmpFolder("static-site");
+            File destination = Globals.getNewTmpFolder("some folder/static-site");
 
             StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, destination);
             generator.generate();

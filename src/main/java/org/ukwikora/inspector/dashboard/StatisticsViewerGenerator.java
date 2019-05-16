@@ -31,7 +31,7 @@ public class StatisticsViewerGenerator {
         input.put("sidebar", sideBar);
         input.put("generated_date", DateTime.now().toLocalDate().toString());
 
-        copyResources();
+        FileUtils.copyResources("static", destination);
         generateSummaryPage(new HashMap<>(input), clones);
         generateDependenciesPage(new HashMap<>(input));
         generateDeadCodePage(new HashMap<>(input));
@@ -41,11 +41,6 @@ public class StatisticsViewerGenerator {
         for(Project project: projects){
             generateSingleProjectPage(project, clones, new HashMap<>(input));
         }
-    }
-
-    void copyResources() throws Exception {
-        File source = FileUtils.getResourceFile("static");
-        org.apache.commons.io.FileUtils.copyDirectory(source, destination);
     }
 
     private Clones<UserKeyword> computeClones(){
