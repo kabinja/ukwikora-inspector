@@ -1,6 +1,8 @@
 package org.ukwikora.inspector.dashboard;
 
 import freemarker.template.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.ukwikora.analytics.CloneDetection;
 import org.ukwikora.analytics.Clones;
@@ -17,6 +19,7 @@ import java.util.*;
 public class StatisticsViewerGenerator {
     private List<Project> projects;
     private File destination;
+    private static final Logger logger = LogManager.getLogger(StatisticsViewerGenerator.class);
 
     public StatisticsViewerGenerator(List<Project> projects, File destination){
         this.projects = projects;
@@ -31,7 +34,7 @@ public class StatisticsViewerGenerator {
         input.put("sidebar", sideBar);
         input.put("generated_date", DateTime.now().toLocalDate().toString());
 
-        FileUtils.copyResources("static", destination);
+        FileUtils.copyResources(getClass(),"static", destination);
         generateSummaryPage(new HashMap<>(input), clones);
         generateDependenciesPage(new HashMap<>(input));
         generateDeadCodePage(new HashMap<>(input));
@@ -138,12 +141,10 @@ public class StatisticsViewerGenerator {
     }
 
     private Template getTemplate(String name) throws Exception {
-        Configuration cfg = new Configuration();
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_21);
+        cfg.setClassForTemplateLoading(this.getClass(), "/ftl");
 
-        File templateDirectory = FileUtils.getResourceFile("ftl");
-        cfg.setDirectoryForTemplateLoading(templateDirectory);
-
-        cfg.setIncompatibleImprovements(new Version(2, 3, 20));
+        cfg.setIncompatibleImprovements(new Version(2, 3, 21));
         cfg.setDefaultEncoding("UTF-8");
         cfg.setLocale(Locale.US);
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
