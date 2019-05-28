@@ -1672,6 +1672,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
+  color: black;
   background-color: transparent;
 }
 
@@ -1723,6 +1724,10 @@ pre code {
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: rgba(70, 108, 217, 0.075);
 }
 
 .table-hover tbody tr:hover {
