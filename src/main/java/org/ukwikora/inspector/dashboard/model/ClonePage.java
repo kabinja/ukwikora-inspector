@@ -13,7 +13,7 @@ public class ClonePage extends Page {
         this.table = new Table(
                 id,
                 "Duplicated Code",
-                new String[]{"Group", "Size", "Type", "Name", "File", "Lines", "Project"}
+                new String[]{"Group", "Size", "Type", "Dispersion", "Name", "File", "Lines", "Project"}
         );
 
         int i = 0;
@@ -24,6 +24,7 @@ public class ClonePage extends Page {
                         String.valueOf(i),
                         String.valueOf(size),
                         cluster.getType().name(),
+                        cluster.isCrossProject() ? "CROSS" : "SINGLE",
                         clone.getName(),
                         clone.getFileName(),
                         clone.getLineRange().toString(),
