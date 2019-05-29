@@ -5,11 +5,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ukwikora.compiler.Compiler;
 import org.ukwikora.gitlabloader.Gitlab;
+import org.ukwikora.inspector.configuration.Configuration;
 import org.ukwikora.inspector.dashboard.StatisticsViewerGenerator;
 import org.ukwikora.model.Project;
 import org.ukwikora.utils.CommandRunner;
-import org.ukwikora.utils.Configuration;
-import org.ukwikora.utils.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,56 +17,50 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class ProjectAnalyticsCli implements CommandRunner {
     private static final Logger logger = LogManager.getLogger(ProjectAnalyticsCli.class);
 
     @Override
     public void run() throws Exception {
-        String tmpLocation = "";
+        logger.info("Start analysis...");
+        Instant start = Instant.now();
 
-        try{
-            logger.info("Start analysis...");
-            Instant start = Instant.now();
+        // read configuration and setup system
+        Configuration config = Configuration.getInstance();
+        String[] location = getLocation(config);
+        File outputDir = new File(config.getOutputDirectory());
 
-            // read configuration and setup system
-            Configuration config = Configuration.getInstance();
-            Plugin analytics = config.getPlugin("project analytics");
-            tmpLocation = loadProjects(analytics);
-            File outputDir = new File(analytics.getPropertyAsString("output directory"));
+        // analyze projects
+        List<Project> projects = Compiler.compile(location);
 
-            // analyze projects
-            List<Project> projects = compileProjects(tmpLocation);
+        // export to static website
+        StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, outputDir);
+        generator.generate();
 
-            // export to static website
-            StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, outputDir);
-            generator.generate();
-
-            long end = Duration.between(start, Instant.now()).toMillis();
-            logger.info(String.format("Analysis performed in %d ms", end));
-        }
-        finally {
-            if(tmpLocation.isEmpty()) {
-                File tmp = new File(tmpLocation);
-                tmp.deleteOnExit();
-            }
-        }
+        long end = Duration.between(start, Instant.now()).toMillis();
+        logger.info(String.format("Analysis performed in %d ms", end));
     }
 
-    private String loadProjects(Plugin analytics) {
-        String url = analytics.getPropertyAsString("git url", "");
-        String token = analytics.getPropertyAsString("git token", "");
-        String group = analytics.getPropertyAsString("git group");
-        String location = analytics.getPropertyAsString("project location");
-        String defaultBranch = analytics.getPropertyAsString("git default branch", "master");
-        Map<String, String> branchExceptions = analytics.getPropertyAsStringMap("git branch exception");
+    private String[] getLocation(Configuration configuration) throws Exception {
+        String[] location;
 
-        location = createTmpFolder(location);
+        if(configuration.isGitLab()){
+            org.ukwikora.inspector.configuration.Gitlab gitlabConfig = configuration.getGitlab();
+            String tmpFolder = createTmpFolder(gitlabConfig.getLocalFolder());
 
-        Gitlab gitlab = new Gitlab().setToken(token).setUrl(url);
-        List<org.ukwikora.gitlabloader.Project> projects = gitlab.findProjectsByGroupName(group);
-        gitlab.cloneProjects(projects, location, defaultBranch, branchExceptions);
+            Gitlab gitlab = new Gitlab().setToken(gitlabConfig.getToken()).setUrl(gitlabConfig.getUrl());
+            List<org.ukwikora.gitlabloader.Project> projects = gitlab.findProjectsByGroupName(gitlabConfig.getGroup());
+            gitlab.cloneProjects(projects, tmpFolder, gitlabConfig.getDefaultBranch(), gitlabConfig.getBranchExceptions());
+
+            location = org.ukwikora.utils.FileUtils.getSubFolders(tmpFolder);
+        }
+        else if(configuration.isLocalSource()){
+            location = configuration.getLocalSource().getFolders().toArray(new String[0]);
+        }
+        else{
+            throw new Exception("Invalid configuration, missing source for text to analyze");
+        }
 
         return location;
     }
@@ -91,10 +84,8 @@ public class ProjectAnalyticsCli implements CommandRunner {
             }
         }
 
-        return location;
-    }
+        folder.deleteOnExit();
 
-    private List<Project> compileProjects(String location) {
-        return Compiler.compile(org.ukwikora.utils.FileUtils.getSubFolders(location));
+        return location;
     }
 }

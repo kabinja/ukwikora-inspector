@@ -1,0 +1,14 @@
+{
+  "verbose": false,
+  "logger level": "INFO",
+  "output directory": "/path/to/output",
+  "gitlab": {
+    "url": "https://url.to.git",
+    "token": "RION0947UVP98F",
+    "group": "group I am targetting",
+    "default branch": "some branch",
+    "branch exceptions": {
+      "some project": "other branch"
+    }
+  }
+}

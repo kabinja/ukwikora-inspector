@@ -12,7 +12,7 @@ import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFact
 import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.apache.commons.cli.*;
-import org.ukwikora.utils.Configuration;
+import org.ukwikora.inspector.configuration.Configuration;
 
 import java.io.IOException;
 
@@ -39,10 +39,8 @@ public class Inspector {
 
             setLoggerLevel(config);
 
-            if(config.hasPlugin("project analytics")){
-                ProjectAnalyticsCli projectAnalyticsCli = new ProjectAnalyticsCli();
-                projectAnalyticsCli.run();
-            }
+            ProjectAnalyticsCli projectAnalyticsCli = new ProjectAnalyticsCli();
+            projectAnalyticsCli.run();
 
         } catch (ParseException e) {
             getLogger().error(String.format("Parse Exception: argument '%s' is missing", e.getMessage()));

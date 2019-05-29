@@ -1,0 +1,11 @@
+{
+  "verbose": false,
+  "logger level": "INFO",
+  "output directory": "/path/to/output",
+  "local source": {
+    "folders": [
+      "/path/to/project1",
+      "/path/to/project2"
+    ]
+  }
+}
