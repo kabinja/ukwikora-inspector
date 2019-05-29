@@ -66,9 +66,9 @@ public class ProjectAnalyticsCli implements CommandRunner {
     }
 
     private String createTmpFolder(String location) {
-        File folder = new File(location);
+        File folder = location != null ? new File(location) : null;
 
-        if(location.isEmpty() || !folder.isDirectory()){
+        if(location == null || location.isEmpty() || !folder.isDirectory()){
             File tmp = FileUtils.getTempDirectory();
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
