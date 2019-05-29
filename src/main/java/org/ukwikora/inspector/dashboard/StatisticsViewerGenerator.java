@@ -35,6 +35,7 @@ public class StatisticsViewerGenerator {
         input.put("generated_date", DateTime.now().toLocalDate().toString());
 
         FileUtils.copyResources(getClass(),"static", destination);
+        generateDocumentationPage(new HashMap<>(input));
         generateSummaryPage(new HashMap<>(input), clones);
         generateDependenciesPage(new HashMap<>(input));
         generateDeadCodePage(new HashMap<>(input));
@@ -48,6 +49,10 @@ public class StatisticsViewerGenerator {
 
     private Clones<UserKeyword> computeClones(){
         return CloneDetection.findClones(new HashSet<>(projects), UserKeyword.class);
+    }
+
+    private void generateDocumentationPage(Map<String, Object> input) throws Exception {
+        processTemplate("documentation.ftl", input, new File(destination, "documentation.html"));
     }
 
     private void generateSummaryPage(Map<String, Object> input, Clones<UserKeyword> clones) throws Exception {
