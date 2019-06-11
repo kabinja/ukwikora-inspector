@@ -1,4 +1,5 @@
 <#include "lib/base.ftl">
+<#include "lib/chart-area.ftl">
 
 <#macro js_imports>
   <#list summaryPage.scripts as url>
@@ -33,81 +34,31 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <!-- Area Chart -->
-      <div class="card border-0 shadow mb-4">
-        <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">${summaryPage.deadCodeChart.name}</h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="${summaryPage.deadCodeChart.id}"></canvas>
-          </div>
-        </div>
-      </div>
+      <@chartArea chart=summaryPage.deadCodeChart/>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <!-- Area Chart -->
-      <div class="card border-0 shadow mb-4">
-        <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">${summaryPage.duplicatedChart.name}</h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="${summaryPage.duplicatedChart.id}"></canvas>
-          </div>
-        </div>
-      </div>
+      <@chartArea chart=summaryPage.duplicatedChart/>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <!-- Area Chart -->
-      <div class="card border-0 shadow mb-4">
-        <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">${summaryPage.testCasesChart.name}</h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="${summaryPage.testCasesChart.id}"></canvas>
-          </div>
-        </div>
-      </div>
+      <@chartArea chart=summaryPage.testCasesChart/>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-12">
-      <!-- Area Chart -->
-      <div class="card border-0 shadow mb-4">
-        <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">${summaryPage.userKeywordsChart.name}</h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="${summaryPage.userKeywordsChart.id}"></canvas>
-          </div>
-        </div>
-      </div>
+      <@chartArea chart=summaryPage.userKeywordsChart/>
     </div>
   </div>
 
   <div class="row">
     <div class="col-sm-6">
-      <!-- Area Chart -->
-      <div class="card border-0 shadow mb-4">
-        <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">${summaryPage.cloneChart.name}</h6>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="${summaryPage.cloneChart.id}"></canvas>
-          </div>
-        </div>
-      </div>
+      <@chartArea chart=summaryPage.cloneChart/>
     </div>
   </div>
 </#macro>

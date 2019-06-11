@@ -61,3 +61,11 @@ var chart = new Chart(ctx, {
     }
   }
 });
+
+chart.render();
+document.getElementById("save-${chart.id}").addEventListener("click",function(){
+  const canvas = document.getElementById("${chart.id}")
+  canvas.toBlob(function(blob) {
+    saveAs(blob, "${chart.id}.png");
+  });
+});

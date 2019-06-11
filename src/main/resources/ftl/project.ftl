@@ -1,4 +1,5 @@
 <#include "lib/base.ftl">
+<#include "lib/chart-area.ftl">
 
 <#macro js_imports>
     <#list project.scripts as url>
@@ -32,58 +33,18 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <!-- Area Chart -->
-            <div class="card border-0 shadow mb-4">
-                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">${project.connectivityChart.name}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="${project.connectivityChart.id}"></canvas>
-                    </div>
-                </div>
-            </div>
+            <@chartArea chart=project.connectivityChart/>
         </div>
         <div class="col-lg-6">
-            <!-- Area Chart -->
-            <div class="card border-0 shadow mb-4">
-                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">${project.depthChart.name}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="${project.depthChart.id}"></canvas>
-                    </div>
-                </div>
-            </div>
+            <@chartArea chart=project.depthChart/>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <!-- Area Chart -->
-            <div class="card border-0 shadow mb-4">
-                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">${project.sizeChart.name}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="${project.sizeChart.id}"></canvas>
-                    </div>
-                </div>
-            </div>
+            <@chartArea chart=project.sizeChart/>
         </div>
         <div class="col-lg-6">
-            <!-- Area Chart -->
-            <div class="card border-0 shadow mb-4">
-                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">${project.sequenceChart.name}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="${project.sequenceChart.id}"></canvas>
-                    </div>
-                </div>
-            </div>
+            <@chartArea chart=project.sequenceChart/>
         </div>
     </div>
     <div class="row">
@@ -100,17 +61,7 @@
             </div>
         </div>
         <div class="col-lg-6">
-            <!-- Area Chart -->
-            <div class="card border-0 shadow mb-4">
-                <div class="card-header border-0 py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">${project.cloneChart.name}</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area">
-                        <canvas id="${project.cloneChart.id}"></canvas>
-                    </div>
-                </div>
-            </div>
+            <@chartArea chart=project.cloneChart/>
         </div>
     </div>
 </#macro>
