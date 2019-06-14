@@ -14,8 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class Globals {
-    public static double epsilon = 0.0001;
-
     public static File getResourceFile(String name){
         File file;
 
