@@ -20,16 +20,13 @@ public class DeadCodePage extends Page {
                 new String[]{"Type", "Name", "File", "Lines", "Project"}
         );
 
-        String userKeywordType = StringUtils.toBeautifulName(UserKeyword.class.getSimpleName());
-        String variableType = StringUtils.toBeautifulName(Variable.class.getSimpleName());
-
         for(Project project: projects){
             String projectName = StringUtils.toBeautifulName(project.getName());
 
             for(UserKeyword userKeyword: project.getUserKeywords()){
                 if(userKeyword.getDependencies().isEmpty()){
                     table.addRow(new String[]{
-                            userKeywordType,
+                            "User Keyword",
                             userKeyword.getName(),
                             userKeyword.getFileName(),
                             userKeyword.getLineRange().toString(),
@@ -41,7 +38,7 @@ public class DeadCodePage extends Page {
             for(Variable variable: project.getVariables()){
                 if(variable.getDependencies().isEmpty()){
                     table.addRow(new String[]{
-                            variableType,
+                            "Variable",
                             variable.getName(),
                             variable.getFileName(),
                             variable.getLineRange().toString(),

@@ -41,6 +41,7 @@ public class StatisticsViewerGenerator {
         generateDeadCodePage(new HashMap<>(input));
         generateClonePage(new HashMap<>(input), clones);
         generateViolationsPage(new HashMap<>(input));
+        generateDictionaryPage(new HashMap<>(input));
 
         for(Project project: projects){
             generateSingleProjectPage(project, clones, new HashMap<>(input));
@@ -118,6 +119,17 @@ public class StatisticsViewerGenerator {
         input.put("violations", violationPage);
         processTemplate("violations.ftl", input, new File(destination, "violations.html"));
     }
+
+    private void generateDictionaryPage(HashMap<String, Object> input)  throws  Exception{
+        DictionaryPage dictionaryPage = new DictionaryPage("dictionary", "Dictionary", projects);
+
+        input.put("data", dictionaryPage.getTable());
+        processTemplate("lib/table-js.ftl", input, new File(destination, dictionaryPage.getTable().getUrl()));
+
+        input.put("dictionary", dictionaryPage);
+        processTemplate("dictionary.ftl", input, new File(destination, "dictionary.html"));
+    }
+
 
     private void generateSingleProjectPage(Project project, Clones<UserKeyword> clones, Map<String, Object> input) throws Exception {
         SingleProjectPage singleProjectPage = new SingleProjectPage(project, clones);

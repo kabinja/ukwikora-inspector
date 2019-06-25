@@ -123,6 +123,13 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
+                <a class="nav-link" href="dictionary.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Dictionary</span></a>
+            </li>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
                 <a class="nav-link" href="documentation.html">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Documentation</span></a>
