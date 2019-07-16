@@ -1,8 +1,6 @@
 package org.ukwikora.inspector.dashboard;
 
 import freemarker.template.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 import org.ukwikora.analytics.CloneDetection;
 import org.ukwikora.analytics.Clones;
@@ -19,7 +17,6 @@ import java.util.*;
 public class StatisticsViewerGenerator {
     private List<Project> projects;
     private File destination;
-    private static final Logger logger = LogManager.getLogger(StatisticsViewerGenerator.class);
 
     public StatisticsViewerGenerator(List<Project> projects, File destination){
         this.projects = projects;
