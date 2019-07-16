@@ -32,18 +32,41 @@ Both dependencies can be installed using mvn clean install.
 
 ### Configuration file
 
+#### Configuration to load project from local file system
+
     {
-        "git url": "url/of/gitlab/server",
-        "git token": "gitlab-token",
-        "git group": "name-of-group-to-extract-projects",
-        "project location": "/path/to/destination/folder",
-        "git default branch": "branch to analyze",
-        "git branch exception": "project-name#branch-name"
+        "verbose": false,
+        "logger level": "INFO",
+        "output directory": "/path/to/output/directory",
+        "local source": {
+            "folders": [
+                "/path/to/project1",
+                "/path/to/project2",
+                "/path/to/project3"
+            ]
+        }
+    }
+
+#### Configuration to load project from Gitlab
+
+    {
+        "verbose": false,
+        "logger level": "INFO",
+        "output directory": "/path/to/output/directory",
+        "gitlab": {
+            "default branch": "name-default-branch",
+            "branch exception": {
+                "project1":"branch1",
+                "project2":"branch2
+            }
+            ,
+            "local folder":"/path/to/folder/to/checkout"
+        }
     }
 
 ### Running
 
-To launch the analysis run ukwikora-inspector.jar -config /path/to/config.json
+To launch the analysis run java -jar ukwikora-inspector.jar -config /path/to/config.json
 
 ## Running the tests
 
