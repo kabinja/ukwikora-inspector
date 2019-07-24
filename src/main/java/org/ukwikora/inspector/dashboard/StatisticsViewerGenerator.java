@@ -9,9 +9,8 @@ import org.ukwikora.model.Project;
 import org.ukwikora.model.UserKeyword;
 import org.ukwikora.utils.FileUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class StatisticsViewerGenerator {
@@ -167,7 +166,7 @@ public class StatisticsViewerGenerator {
     }
 
     private void processTemplate(String name, Map<String, Object> input, File output) throws Exception {
-        try(Writer fileWriter = new FileWriter(output)) {
+        try(OutputStreamWriter fileWriter = new OutputStreamWriter(new FileOutputStream(output), StandardCharsets.UTF_8)) {
             Template template = getTemplate(name);
             template.process(input, fileWriter);
         }
