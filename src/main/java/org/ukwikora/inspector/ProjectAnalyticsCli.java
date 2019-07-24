@@ -3,7 +3,7 @@ package org.ukwikora.inspector;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ukwikora.compiler.Compiler;
+import org.ukwikora.builder.Builder;
 import org.ukwikora.gitlabloader.Gitlab;
 import org.ukwikora.inspector.configuration.Configuration;
 import org.ukwikora.inspector.dashboard.StatisticsViewerGenerator;
@@ -32,7 +32,7 @@ public class ProjectAnalyticsCli implements CommandRunner {
         File outputDir = new File(config.getOutputDirectory());
 
         // analyze projects
-        List<Project> projects = Compiler.compile(location);
+        List<Project> projects = Builder.build(location, true);
 
         // export to static website
         StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, outputDir);

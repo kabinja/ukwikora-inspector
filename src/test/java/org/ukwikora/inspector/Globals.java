@@ -1,7 +1,7 @@
 package org.ukwikora.inspector;
 
 import org.apache.commons.io.FileUtils;
-import org.ukwikora.compiler.Compiler;
+import org.ukwikora.builder.Builder;
 import org.ukwikora.model.Project;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public class Globals {
             resourcesPaths[i] = getResourceFile(resourcesPaths[i]).getAbsolutePath();
         }
 
-        return Compiler.compile(resourcesPaths);
+        return Builder.build(resourcesPaths, true);
     }
 
     public static File getNewTmpFolder(String name){
