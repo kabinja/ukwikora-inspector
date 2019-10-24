@@ -19,10 +19,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectAnalyticsCli implements CommandRunner {
@@ -61,6 +58,11 @@ public class ProjectAnalyticsCli implements CommandRunner {
             git.setToken(gitlabConfig.getToken());
             git.setUrl(gitlabConfig.getUrl());
             git.setCloneFolder(tmpFolder);
+            git.setDefaultBranch(gitlabConfig.getDefaultBranch());
+
+            for (Map.Entry<String, String> entry: gitlabConfig.getBranchExceptions().entrySet()){
+                git.setBranchForProject(entry.getKey(), entry.getValue());
+            }
 
             final Set<LocalRepo> localRepos = git.cloneProjectsFromGroup(gitlabConfig.getGroup());
             location = localRepos.stream().map(LocalRepo::getLocation).collect(Collectors.toSet());
