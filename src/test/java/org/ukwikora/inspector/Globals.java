@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -30,11 +32,13 @@ public class Globals {
     }
 
     public static List<Project> compileProjects(String[] resourcesPaths){
+        Set<File> files = new HashSet<>();
+
         for(int i = 0; i < resourcesPaths.length; ++i){
-            resourcesPaths[i] = getResourceFile(resourcesPaths[i]).getAbsolutePath();
+            files.add(getResourceFile(resourcesPaths[i]));
         }
 
-        return Builder.build(resourcesPaths, true);
+        return Builder.build(files, true);
     }
 
     public static File getNewTmpFolder(String name){
