@@ -58,10 +58,15 @@ public class ProjectAnalyticsCli implements CommandRunner {
             git.setToken(gitlabConfig.getToken());
             git.setUrl(gitlabConfig.getUrl());
             git.setCloneFolder(tmpFolder);
-            git.setDefaultBranch(gitlabConfig.getDefaultBranch());
 
-            for (Map.Entry<String, String> entry: gitlabConfig.getBranchExceptions().entrySet()){
-                git.setBranchForProject(entry.getKey(), entry.getValue());
+            if(gitlabConfig.getDefaultBranch() != null){
+                git.setDefaultBranch(gitlabConfig.getDefaultBranch());
+            }
+
+            if(gitlabConfig.getBranchExceptions() != null){
+                for (Map.Entry<String, String> entry: gitlabConfig.getBranchExceptions().entrySet()){
+                    git.setBranchForProject(entry.getKey(), entry.getValue());
+                }
             }
 
             final Set<LocalRepo> localRepos = git.cloneProjectsFromGroup(gitlabConfig.getGroup());
