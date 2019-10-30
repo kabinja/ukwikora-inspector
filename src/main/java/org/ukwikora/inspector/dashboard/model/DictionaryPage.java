@@ -6,13 +6,13 @@ import org.ukwikora.model.UserKeyword;
 import org.ukwikora.model.Variable;
 import org.ukwikora.utils.StringUtils;
 
-import java.util.List;
+import java.util.Set;
 
 public class DictionaryPage extends Page {
 
     private final Table table;
 
-    public DictionaryPage(String id, String name, List<Project> projects) throws Exception {
+    public DictionaryPage(String id, String name, Set<Project> projects) throws Exception {
         super(id, name);
 
         this.table = new Table(

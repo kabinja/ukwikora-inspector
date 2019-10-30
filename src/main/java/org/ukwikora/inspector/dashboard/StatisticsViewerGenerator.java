@@ -14,10 +14,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class StatisticsViewerGenerator {
-    private List<Project> projects;
+    private Set<Project> projects;
     private File destination;
 
-    public StatisticsViewerGenerator(List<Project> projects, File destination){
+    public StatisticsViewerGenerator(Set<Project> projects, File destination){
         this.projects = projects;
         this.destination = destination;
     }

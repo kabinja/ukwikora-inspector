@@ -36,7 +36,7 @@ public class ProjectAnalyticsCli implements CommandRunner {
         File outputDir = new File(config.getOutputDirectory());
 
         // analyze projects
-        List<Project> projects = Builder.build(location, true);
+        Set<Project> projects = Builder.build(location, true);
 
         // export to static website
         StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, outputDir);

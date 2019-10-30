@@ -10,7 +10,7 @@ import java.util.Set;
 public class DependencyPage extends Page {
     private final DependencyGraph dependencyGraph;
 
-    public DependencyPage(String id, String name, List<Project> projects) {
+    public DependencyPage(String id, String name, Set<Project> projects) {
         super(id, name);
 
         Set<Dependency> dependencies = new HashSet<>();

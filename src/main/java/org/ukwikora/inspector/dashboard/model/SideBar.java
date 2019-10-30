@@ -5,12 +5,13 @@ import org.ukwikora.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SideBar {
     private final List<Link> links;
     private final List<String> labels;
 
-    public SideBar(List<Project> projects) throws Exception {
+    public SideBar(Set<Project> projects) throws Exception {
         int size = projects.size();
         labels = new ArrayList<>(size);
         links = new ArrayList<>(size);

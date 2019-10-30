@@ -7,13 +7,13 @@ import org.ukwikora.analytics.ViolationDetection;
 import org.ukwikora.inspector.dashboard.InvalidNumberColumnException;
 import org.ukwikora.model.Project;
 
-import java.util.List;
+import java.util.Set;
 
 public class ViolationsPage extends Page{
     private final Table table;
     private final Logger logger = LogManager.getLogger(ViolationsPage.class);
 
-    public ViolationsPage(String id, String name, List<Project> projects) throws InvalidNumberColumnException {
+    public ViolationsPage(String id, String name, Set<Project> projects) throws InvalidNumberColumnException {
         super(id, name);
 
         this.table = new Table(

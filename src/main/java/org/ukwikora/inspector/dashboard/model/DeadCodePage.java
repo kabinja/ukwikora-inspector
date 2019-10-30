@@ -5,13 +5,13 @@ import org.ukwikora.model.UserKeyword;
 import org.ukwikora.model.Variable;
 import org.ukwikora.utils.StringUtils;
 
-import java.util.List;
+import java.util.Set;
 
 public class DeadCodePage extends Page {
 
     private final Table table;
 
-    public DeadCodePage(String id, String name, List<Project> projects) throws Exception {
+    public DeadCodePage(String id, String name, Set<Project> projects) throws Exception {
         super(id, name);
 
         this.table = new Table(
@@ -24,7 +24,7 @@ public class DeadCodePage extends Page {
             String projectName = StringUtils.toBeautifulName(project.getName());
 
             for(UserKeyword userKeyword: project.getUserKeywords()){
-                if(userKeyword.getDependencies().isEmpty()){
+                if(userKeyword.isDeadCode()){
                     table.addRow(new String[]{
                             "User Keyword",
                             userKeyword.getName(),
@@ -36,7 +36,7 @@ public class DeadCodePage extends Page {
             }
 
             for(Variable variable: project.getVariables()){
-                if(variable.getDependencies().isEmpty()){
+                if(variable.isDeadCode()){
                     table.addRow(new String[]{
                             "Variable",
                             variable.getName(),

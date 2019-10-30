@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -31,7 +30,7 @@ public class Globals {
         return file;
     }
 
-    public static List<Project> compileProjects(String[] resourcesPaths){
+    public static Set<Project> compileProjects(String[] resourcesPaths){
         Set<File> files = new HashSet<>();
 
         for(int i = 0; i < resourcesPaths.length; ++i){

@@ -24,7 +24,7 @@ public class SummaryPage extends Page {
     private int numberKeywords;
     private int numberTestCases;
 
-    public SummaryPage(String id, String name, List<Project> projects, Clones<UserKeyword> clones) throws Exception {
+    public SummaryPage(String id, String name, Set<Project> projects, Clones<UserKeyword> clones) throws Exception {
         super(id, name);
 
         linesOfCode = 0;

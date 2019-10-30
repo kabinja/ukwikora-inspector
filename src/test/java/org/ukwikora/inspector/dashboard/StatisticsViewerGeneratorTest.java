@@ -3,11 +3,9 @@ package org.ukwikora.inspector.dashboard;
 import org.junit.jupiter.api.Test;
 import org.ukwikora.inspector.Globals;
 import org.ukwikora.model.Project;
-import org.ukwikora.utils.FileUtils;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,7 +19,7 @@ public class StatisticsViewerGeneratorTest {
                     "robot/project-suite/project-C"
             };
 
-            List<Project> projects = Globals.compileProjects(paths);
+            Set<Project> projects = Globals.compileProjects(paths);
             File destination = Globals.getNewTmpFolder("some folder/static-site");
 
             StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, destination);
