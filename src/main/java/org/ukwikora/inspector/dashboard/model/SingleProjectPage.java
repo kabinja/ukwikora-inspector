@@ -1,8 +1,8 @@
 package org.ukwikora.inspector.dashboard.model;
 
-import org.ukwikora.analytics.Clone;
 import org.ukwikora.analytics.Clones;
 import org.ukwikora.analytics.ProjectStatistics;
+import org.ukwikora.exception.InvalidTypeException;
 import org.ukwikora.model.Project;
 import org.ukwikora.model.TestCase;
 import org.ukwikora.model.UserKeyword;
@@ -49,7 +49,7 @@ public class SingleProjectPage extends Page {
         this.cloneChart = createCloneChart(project, clones);
     }
 
-    private BarChart createConnectivityChart(ProjectStatistics statistics) throws IOException {
+    private BarChart createConnectivityChart(ProjectStatistics statistics) throws IOException, InvalidTypeException {
         Map<Integer, Integer> connectivity = statistics.getConnectivityDistribution(UserKeyword.class);
 
         ChartDataset dataset = new ChartDataset("Number of Keywords", getValues(connectivity), ChartDataset.Color.BLUE);
@@ -68,7 +68,7 @@ public class SingleProjectPage extends Page {
         return chart;
     }
 
-    private BarChart createDepthChart(ProjectStatistics statistics) throws IOException {
+    private BarChart createDepthChart(ProjectStatistics statistics) throws IOException, InvalidTypeException {
         Map<Integer, Integer> depth = statistics.getLevelDistribution(UserKeyword.class);
 
         ChartDataset dataset = new ChartDataset("Number of Keywords", getValues(depth), ChartDataset.Color.BLUE);
@@ -87,7 +87,7 @@ public class SingleProjectPage extends Page {
         return chart;
     }
 
-    private BarChart createSequenceChart(ProjectStatistics statistics) throws IOException {
+    private BarChart createSequenceChart(ProjectStatistics statistics) throws IOException, InvalidTypeException {
         Map<Integer, Integer> sequence = statistics.getSequenceDistribution(TestCase.class);
 
         ChartDataset dataset = new ChartDataset("Number of Test Cases", getValues(sequence), ChartDataset.Color.BLUE);
@@ -106,7 +106,7 @@ public class SingleProjectPage extends Page {
         return chart;
     }
 
-    private BarChart createSizeChart(ProjectStatistics statistics) throws IOException {
+    private BarChart createSizeChart(ProjectStatistics statistics) throws IOException, InvalidTypeException {
         Map<Integer, Integer> size = statistics.getSizeDistribution(UserKeyword.class);
 
         ChartDataset dataset = new ChartDataset("Number of Keywords", getValues(size), ChartDataset.Color.BLUE);

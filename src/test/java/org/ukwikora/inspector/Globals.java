@@ -37,7 +37,9 @@ public class Globals {
             files.add(getResourceFile(resourcesPaths[i]));
         }
 
-        return Builder.build(files, true);
+        Builder builder = new Builder();
+
+        return builder.build(files, true);
     }
 
     public static File getNewTmpFolder(String name){

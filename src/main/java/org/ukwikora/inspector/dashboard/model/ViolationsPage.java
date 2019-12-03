@@ -26,10 +26,10 @@ public class ViolationsPage extends Page{
             try{
                 this.table.addRow(new String[]{
                         violation.getLevel().name(),
-                        violation.getStatement().getName(),
-                        violation.getStatement().getFileName(),
-                        violation.getStatement().getLineRange().toString(),
-                        violation.getStatement().getFile().getProject().getName(),
+                        violation.getNode().getName(),
+                        violation.getNode().getFileName(),
+                        violation.getNode().getLineRange().toString(),
+                        violation.getNode().getFile().getProject().getName(),
                         violation.getCause().toString()
                 });
             }catch (Exception e){

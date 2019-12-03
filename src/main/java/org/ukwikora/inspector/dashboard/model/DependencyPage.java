@@ -4,7 +4,6 @@ import org.ukwikora.model.Project;
 import org.ukwikora.utils.StringUtils;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class DependencyPage extends Page {

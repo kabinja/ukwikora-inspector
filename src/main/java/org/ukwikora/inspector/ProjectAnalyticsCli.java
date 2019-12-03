@@ -12,7 +12,6 @@ import org.ukwikora.inspector.configuration.Configuration;
 import org.ukwikora.inspector.configuration.Gitlab;
 import org.ukwikora.inspector.dashboard.StatisticsViewerGenerator;
 import org.ukwikora.model.Project;
-import org.ukwikora.utils.CommandRunner;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +21,9 @@ import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ProjectAnalyticsCli implements CommandRunner {
+public class ProjectAnalyticsCli {
     private static final Logger logger = LogManager.getLogger(ProjectAnalyticsCli.class);
 
-    @Override
     public void run() throws Exception {
         logger.info("Start analysis...");
         Instant start = Instant.now();
@@ -36,7 +34,15 @@ public class ProjectAnalyticsCli implements CommandRunner {
         File outputDir = new File(config.getOutputDirectory());
 
         // analyze projects
-        Set<Project> projects = Builder.build(location, true);
+        Builder builder = new Builder();
+        logger.info("Start building projects...");
+        Set<Project> projects = builder.build(location, true);
+
+        logger.info(String.format("Projects parsed in %d ms", builder.getParsingTime()));
+        logger.info(String.format("Projects linked in %d ms", builder.getLinkingTime()));
+        logger.info(String.format("Projects built in %d ms", builder.getBuildTime()));
+
+        logger.info(String.format("Number of error: %d", builder.getErrors().size()));
 
         // export to static website
         StatisticsViewerGenerator generator = new StatisticsViewerGenerator(projects, outputDir);
