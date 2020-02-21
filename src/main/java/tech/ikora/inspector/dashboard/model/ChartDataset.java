@@ -2,7 +2,7 @@ package tech.ikora.inspector.dashboard.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRawValue;
-import tech.ikora.utils.JsonUtils;
+import tech.ikora.inspector.utils.JsonUtils;
 
 import java.io.IOException;
 import java.util.List;

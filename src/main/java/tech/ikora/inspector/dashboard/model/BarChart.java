@@ -1,6 +1,6 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.utils.JsonUtils;
+import tech.ikora.inspector.utils.JsonUtils;
 
 import java.io.IOException;
 import java.util.Collections;

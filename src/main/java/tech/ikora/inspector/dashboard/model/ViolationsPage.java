@@ -2,15 +2,15 @@ package tech.ikora.inspector.dashboard.model;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tech.ikora.analytics.Violation;
-import tech.ikora.analytics.ViolationDetection;
+import tech.ikora.analytics.violations.Violation;
+import tech.ikora.analytics.violations.ViolationDetection;
 import tech.ikora.inspector.dashboard.InvalidNumberColumnException;
 import tech.ikora.model.Project;
 
 import java.util.Set;
 
-import static tech.ikora.analytics.Violation.Cause.MULTIPLE_DEFINITIONS;
-import static tech.ikora.analytics.Violation.Cause.TRANSITIVE_DEPENDENCY;
+import static tech.ikora.analytics.violations.Violation.Cause.MULTIPLE_DEFINITIONS;
+import static tech.ikora.analytics.violations.Violation.Cause.TRANSITIVE_DEPENDENCY;
 
 public class ViolationsPage extends Page{
     private final Table table;
