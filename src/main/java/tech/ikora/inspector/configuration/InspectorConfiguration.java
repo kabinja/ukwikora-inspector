@@ -3,15 +3,13 @@ package tech.ikora.inspector.configuration;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.harawata.appdirs.AppDirs;
-import net.harawata.appdirs.AppDirsFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Configuration {
+public class InspectorConfiguration {
     private Boolean verbose;
     @JsonProperty("logger level")
     private String loggerLevel;
@@ -22,18 +20,16 @@ public class Configuration {
     private LocalSource localSource;
 
     @JsonIgnore
-    private static File configurationFolder;
+    private static InspectorConfiguration instance = new InspectorConfiguration();
     @JsonIgnore
-    private static Configuration instance = new Configuration();
-    @JsonIgnore
-    private static final Logger logger = LogManager.getLogger(Configuration.class);
+    private static final Logger logger = LogManager.getLogger(InspectorConfiguration.class);
 
-    private Configuration(){
+    private InspectorConfiguration(){
         verbose = true;
         loggerLevel = "INFO";
     }
 
-    public static Configuration getInstance()
+    public static InspectorConfiguration getInstance()
     {   return instance;
     }
 
@@ -81,34 +77,19 @@ public class Configuration {
         this.localSource = localSource;
     }
 
-    public static void setConfigurationFolder(File configurationFolder) {
-        Configuration.configurationFolder = configurationFolder;
-    }
-
-    public static void setInstance(Configuration instance) {
-        Configuration.instance = instance;
+    public static void setInstance(InspectorConfiguration instance) {
+        InspectorConfiguration.instance = instance;
     }
 
     public static Logger getLogger() {
         return logger;
     }
 
-    public File getConfigurationFolder(){
-        return configurationFolder;
-    }
-
     public static void initialize(String config) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         File file = new File(config);
 
-        instance = mapper.readValue(file, Configuration.class);
-
-        AppDirs appDirs = AppDirsFactory.getInstance();
-        String configPath = appDirs.getUserDataDir("ukwikora-inspector", "0.0.1", "kabinja");
-
-        configurationFolder = new File(configPath);
-        configurationFolder.mkdirs();
-
+        instance = mapper.readValue(file, InspectorConfiguration.class);
         logger.info("Configuration loaded from " + config);
     }
 

@@ -1,6 +1,7 @@
 package tech.ikora.inspector;
 
 import org.apache.commons.io.FileUtils;
+import tech.ikora.BuildConfiguration;
 import tech.ikora.builder.BuildResult;
 import tech.ikora.builder.Builder;
 import tech.ikora.model.Project;
@@ -39,7 +40,7 @@ public class Globals {
             files.add(getResourceFile(resourcesPaths[i]));
         }
 
-        return Builder.build(files, new tech.ikora.Configuration(), true);
+        return Builder.build(files, new BuildConfiguration(), true);
     }
 
     public static File getNewTmpFolder(String name){
