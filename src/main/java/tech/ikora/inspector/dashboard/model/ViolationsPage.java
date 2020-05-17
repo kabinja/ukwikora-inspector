@@ -6,8 +6,7 @@ import tech.ikora.analytics.violations.Violation;
 import tech.ikora.analytics.violations.ViolationDetection;
 import tech.ikora.inspector.dashboard.InvalidNumberColumnException;
 import tech.ikora.model.Project;
-
-import java.util.Set;
+import tech.ikora.model.Projects;
 
 import static tech.ikora.analytics.violations.Violation.Cause.MULTIPLE_DEFINITIONS;
 import static tech.ikora.analytics.violations.Violation.Cause.TRANSITIVE_DEPENDENCY;
@@ -16,7 +15,7 @@ public class ViolationsPage extends Page{
     private final Table table;
     private final Logger logger = LogManager.getLogger(ViolationsPage.class);
 
-    public ViolationsPage(String id, String name, Set<Project> projects) throws InvalidNumberColumnException {
+    public ViolationsPage(String id, String name, Projects projects) throws InvalidNumberColumnException {
         super(id, name);
 
         this.table = new Table(
@@ -35,10 +34,10 @@ public class ViolationsPage extends Page{
                 try{
                     this.table.addRow(new String[]{
                             violation.getLevel().name(),
-                            violation.getNode().getName().toString(),
-                            violation.getNode().getFileName(),
-                            violation.getNode().getRange().toString(),
-                            violation.getNode().getProject().getName(),
+                            violation.getSourceNode().getName(),
+                            violation.getSourceNode().getSourceFile().getName(),
+                            violation.getSourceNode().getRange().toString(),
+                            violation.getSourceNode().getProject().getName(),
                             violation.getCause().toString()
                     });
                 }catch (Exception e){

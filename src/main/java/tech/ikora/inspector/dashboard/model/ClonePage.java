@@ -1,7 +1,7 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.CloneCluster;
-import tech.ikora.analytics.Clones;
+import tech.ikora.analytics.clones.CloneCluster;
+import tech.ikora.analytics.clones.Clones;
 import tech.ikora.model.UserKeyword;
 
 public class ClonePage extends Page {
@@ -25,8 +25,8 @@ public class ClonePage extends Page {
                         String.valueOf(size),
                         cluster.getType().name(),
                         cluster.isCrossProject() ? "CROSS" : "SINGLE",
-                        clone.getName().toString(),
-                        clone.getFileName(),
+                        clone.getName(),
+                        clone.getSourceFile().getName(),
                         clone.getRange().toString(),
                         clone.getProject().getName()
                 });

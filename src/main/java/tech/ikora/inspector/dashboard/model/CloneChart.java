@@ -1,7 +1,7 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.Clone;
-import tech.ikora.analytics.Clones;
+import tech.ikora.analytics.clones.Clone;
+import tech.ikora.analytics.clones.Clones;
 import tech.ikora.model.UserKeyword;
 
 import java.io.IOException;

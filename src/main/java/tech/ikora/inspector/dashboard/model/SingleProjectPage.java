@@ -1,7 +1,7 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.Clones;
 import tech.ikora.analytics.ProjectStatistics;
+import tech.ikora.analytics.clones.Clones;
 import tech.ikora.exception.InvalidTypeException;
 import tech.ikora.model.Project;
 import tech.ikora.model.TestCase;

@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import tech.ikora.BuildConfiguration;
 import tech.ikora.builder.BuildResult;
 import tech.ikora.builder.Builder;
-import tech.ikora.model.Project;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +11,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.ErrorManager;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
