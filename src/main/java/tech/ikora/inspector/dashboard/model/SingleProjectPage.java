@@ -1,8 +1,9 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.Clones;
 import tech.ikora.analytics.ProjectStatistics;
+import tech.ikora.analytics.clones.Clones;
 import tech.ikora.exception.InvalidTypeException;
+import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.Project;
 import tech.ikora.model.TestCase;
 import tech.ikora.model.UserKeyword;
@@ -26,7 +27,7 @@ public class SingleProjectPage extends Page {
     private final DependencyGraph dependencyGraph;
     private final BarChart cloneChart;
 
-    public SingleProjectPage(Project project, Clones<UserKeyword> clones) throws Exception {
+    public SingleProjectPage(Project project, Clones<KeywordDefinition> clones) throws Exception {
         super(
             StringUtils.toBeautifulUrl(project.getName(), ""),
             StringUtils.toBeautifulName(project.getName())
@@ -141,7 +142,7 @@ public class SingleProjectPage extends Page {
         return chart;
     }
 
-    private BarChart createCloneChart(Project project, Clones<UserKeyword> clones) throws IOException {
+    private BarChart createCloneChart(Project project, Clones<KeywordDefinition> clones) throws IOException {
         BarChart chart = CloneChart.create(getId(), project.getUserKeywords(), clones);
         this.scripts.add(chart.getUrl());
 

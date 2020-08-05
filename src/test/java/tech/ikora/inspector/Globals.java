@@ -1,9 +1,9 @@
 package tech.ikora.inspector;
 
 import org.apache.commons.io.FileUtils;
+import tech.ikora.BuildConfiguration;
 import tech.ikora.builder.BuildResult;
 import tech.ikora.builder.Builder;
-import tech.ikora.model.Project;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.ErrorManager;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -35,11 +34,11 @@ public class Globals {
     public static BuildResult compileProjects(String[] resourcesPaths){
         Set<File> files = new HashSet<>();
 
-        for(int i = 0; i < resourcesPaths.length; ++i){
-            files.add(getResourceFile(resourcesPaths[i]));
+        for (String resourcesPath : resourcesPaths) {
+            files.add(getResourceFile(resourcesPath));
         }
 
-        return Builder.build(files, new tech.ikora.Configuration(), true);
+        return Builder.build(files, new BuildConfiguration(), true);
     }
 
     public static File getNewTmpFolder(String name){

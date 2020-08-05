@@ -1,18 +1,13 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.model.Project;
-import tech.ikora.model.TestCase;
-import tech.ikora.model.UserKeyword;
-import tech.ikora.model.Variable;
+import tech.ikora.model.*;
 import tech.ikora.utils.StringUtils;
-
-import java.util.Set;
 
 public class DictionaryPage extends Page {
 
     private final Table table;
 
-    public DictionaryPage(String id, String name, Set<Project> projects) throws Exception {
+    public DictionaryPage(String id, String name, Projects projects) throws Exception {
         super(id, name);
 
         this.table = new Table(
@@ -27,8 +22,8 @@ public class DictionaryPage extends Page {
             for(TestCase testCase: project.getTestCases()){
                 table.addRow(new String[]{
                         "Test Case",
-                        testCase.getName().toString(),
-                        testCase.getFileName(),
+                        testCase.getName(),
+                        testCase.getLibraryName(),
                         testCase.getRange().toString(),
                         projectName
                 });
@@ -37,18 +32,18 @@ public class DictionaryPage extends Page {
             for(UserKeyword userKeyword: project.getUserKeywords()){
                 table.addRow(new String[]{
                         "User Keyword",
-                        userKeyword.getName().toString(),
-                        userKeyword.getFileName(),
+                        userKeyword.getName(),
+                        userKeyword.getLibraryName(),
                         userKeyword.getRange().toString(),
                         projectName
                 });
             }
 
-            for(Variable variable: project.getVariables()){
+            for(VariableAssignment variable: project.getVariableAssignments()){
                 table.addRow(new String[]{
                         "Variable",
-                        variable.getName().toString(),
-                        variable.getFileName(),
+                        variable.getName(),
+                        variable.getLibraryName(),
                         variable.getRange().toString(),
                         projectName
                 });

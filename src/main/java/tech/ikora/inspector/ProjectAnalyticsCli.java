@@ -3,16 +3,16 @@ package tech.ikora.inspector;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tech.ikora.BuildConfiguration;
 import tech.ikora.builder.BuildResult;
 import tech.ikora.builder.Builder;
 import tech.ikora.gitloader.Api;
 import tech.ikora.gitloader.GitEngine;
 import tech.ikora.gitloader.GitEngineFactory;
-import tech.ikora.gitloader.git.LocalRepo;
+import tech.ikora.gitloader.git.LocalRepository;
 import tech.ikora.inspector.configuration.Configuration;
 import tech.ikora.inspector.configuration.Gitlab;
 import tech.ikora.inspector.dashboard.StatisticsViewerGenerator;
-import tech.ikora.model.Project;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,15 +34,15 @@ public class ProjectAnalyticsCli {
         Set<File> location = getLocation(config);
         File outputDir = new File(config.getOutputDirectory());
 
-        // configuration defintion
-        tech.ikora.Configuration parserConfiguration = new tech.ikora.Configuration();
+        // configuration definition
+        BuildConfiguration buildConfiguration = new BuildConfiguration();
 
         // analyze projects
         logger.info("Start building projects...");
-        BuildResult results = Builder.build(location, parserConfiguration, true);
+        BuildResult results = Builder.build(location, buildConfiguration, true);
 
         logger.info(String.format("Projects parsed in %d ms", results.getParsingTime()));
-        logger.info(String.format("Projects linked in %d ms", results.getLinkingTime()));
+        logger.info(String.format("Projects linked in %d ms", results.getResolveTime()));
         logger.info(String.format("Projects built in %d ms", results.getBuildTime()));
 
         if(!results.getErrors().isEmpty()){
@@ -80,8 +80,8 @@ public class ProjectAnalyticsCli {
                 }
             }
 
-            final Set<LocalRepo> localRepos = git.cloneProjectsFromGroup(gitlabConfig.getGroup());
-            location = localRepos.stream().map(LocalRepo::getLocation).collect(Collectors.toSet());
+            final Set<LocalRepository> localRepos = git.cloneProjectsFromGroup(gitlabConfig.getGroup());
+            location = localRepos.stream().map(LocalRepository::getLocation).collect(Collectors.toSet());
         }
         else if(configuration.isLocalSource()){
             location = Collections.emptySet();

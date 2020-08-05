@@ -2,10 +2,12 @@ package tech.ikora.inspector.dashboard;
 
 import freemarker.template.*;
 import org.joda.time.DateTime;
-import tech.ikora.analytics.CloneDetection;
-import tech.ikora.analytics.Clones;
+import tech.ikora.analytics.clones.Clones;
+import tech.ikora.analytics.clones.KeywordCloneDetection;
 import tech.ikora.inspector.dashboard.model.*;
+import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.Project;
+import tech.ikora.model.Projects;
 import tech.ikora.model.UserKeyword;
 import tech.ikora.utils.FileUtils;
 
@@ -14,16 +16,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class StatisticsViewerGenerator {
-    private Set<Project> projects;
-    private File destination;
+    private final Projects projects;
+    private final File destination;
 
-    public StatisticsViewerGenerator(Set<Project> projects, File destination){
+    public StatisticsViewerGenerator(Projects projects, File destination){
         this.projects = projects;
         this.destination = destination;
     }
 
     public void generate() throws Exception {
-        Clones<UserKeyword> clones = computeClones();
+        Clones<KeywordDefinition> clones = computeClones();
 
         SideBar sideBar = new SideBar(projects);
         Map<String, Object> input = new HashMap<>();
@@ -44,15 +46,15 @@ public class StatisticsViewerGenerator {
         }
     }
 
-    private Clones<UserKeyword> computeClones(){
-        return CloneDetection.findClones(new HashSet<>(projects), UserKeyword.class);
+    private Clones<KeywordDefinition> computeClones(){
+        return KeywordCloneDetection.findClones(projects);
     }
 
     private void generateDocumentationPage(Map<String, Object> input) throws Exception {
         processTemplate("documentation.ftl", input, new File(destination, "documentation.html"));
     }
 
-    private void generateSummaryPage(Map<String, Object> input, Clones<UserKeyword> clones) throws Exception {
+    private void generateSummaryPage(Map<String, Object> input, Clones<KeywordDefinition> clones) throws Exception {
         SummaryPage summaryPage = new SummaryPage("index", "Summary", projects, clones);
 
         input.put("summaryPage", summaryPage);
@@ -96,7 +98,7 @@ public class StatisticsViewerGenerator {
         processTemplate("dead-code.ftl", input, new File(destination, "dead-code.html"));
     }
 
-    private void generateClonePage(Map<String, Object> input, Clones<UserKeyword> clones) throws Exception {
+    private void generateClonePage(Map<String, Object> input, Clones<KeywordDefinition> clones) throws Exception {
         ClonePage clonePage = new ClonePage("clones", "Duplicated Code", clones);
 
         input.put("data", clonePage.getTable());
@@ -127,7 +129,7 @@ public class StatisticsViewerGenerator {
     }
 
 
-    private void generateSingleProjectPage(Project project, Clones<UserKeyword> clones, Map<String, Object> input) throws Exception {
+    private void generateSingleProjectPage(Project project, Clones<KeywordDefinition> clones, Map<String, Object> input) throws Exception {
         SingleProjectPage singleProjectPage = new SingleProjectPage(project, clones);
 
         input.put("project", singleProjectPage);

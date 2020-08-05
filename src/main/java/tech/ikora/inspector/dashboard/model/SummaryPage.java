@@ -1,8 +1,10 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.Clone;
-import tech.ikora.analytics.Clones;
+import tech.ikora.analytics.clones.Clone;
+import tech.ikora.analytics.clones.Clones;
+import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.Project;
+import tech.ikora.model.Projects;
 import tech.ikora.model.UserKeyword;
 import tech.ikora.utils.StringUtils;
 
@@ -24,7 +26,7 @@ public class SummaryPage extends Page {
     private int numberKeywords;
     private int numberTestCases;
 
-    public SummaryPage(String id, String name, Set<Project> projects, Clones<UserKeyword> clones) throws Exception {
+    public SummaryPage(String id, String name, Projects projects, Clones<KeywordDefinition> clones) throws Exception {
         super(id, name);
 
         linesOfCode = 0;
@@ -137,7 +139,7 @@ public class SummaryPage extends Page {
         duplicatedChart.setYLabel("Number Lines of Code");
     }
 
-    private void createCloneChart(Set<UserKeyword> keywords, Clones<UserKeyword> clones) throws IOException {
+    private void createCloneChart(Set<UserKeyword> keywords, Clones<KeywordDefinition> clones) throws IOException {
         cloneChart = CloneChart.create("", keywords, clones);
     }
 
@@ -186,7 +188,7 @@ public class SummaryPage extends Page {
         testCasesChart.setHeight(height);
     }
 
-    private int getDuplicatedLines(Project project, Clones<UserKeyword> clones) {
+    private int getDuplicatedLines(Project project, Clones<KeywordDefinition> clones) {
         int loc = 0;
 
         for(UserKeyword keyword: project.getUserKeywords()){
