@@ -14,8 +14,8 @@ class ConfigurationTest {
         File configFile = Globals.getResourceFile("config/config-gitlab.json");
 
         try {
-            Configuration.initialize(configFile.getAbsolutePath());
-            Configuration configuration = Configuration.getInstance();
+            InspectorConfiguration.initialize(configFile.getAbsolutePath());
+            InspectorConfiguration configuration = InspectorConfiguration.getInstance();
 
             assertTrue(configuration.isGitLab());
             assertFalse(configuration.isLocalSource());
@@ -41,8 +41,8 @@ class ConfigurationTest {
         File configFile = Globals.getResourceFile("config/config-local-sources.json");
 
         try {
-            Configuration.initialize(configFile.getAbsolutePath());
-            Configuration configuration = Configuration.getInstance();
+            InspectorConfiguration.initialize(configFile.getAbsolutePath());
+            InspectorConfiguration configuration = InspectorConfiguration.getInstance();
 
             assertFalse(configuration.isGitLab());
             assertTrue(configuration.isLocalSource());

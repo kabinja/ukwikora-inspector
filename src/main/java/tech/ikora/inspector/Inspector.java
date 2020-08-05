@@ -12,7 +12,7 @@ import org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilderFact
 import org.apache.logging.log4j.core.config.builder.api.LayoutComponentBuilder;
 import org.apache.logging.log4j.core.config.builder.impl.BuiltConfiguration;
 import org.apache.commons.cli.*;
-import tech.ikora.inspector.configuration.Configuration;
+import tech.ikora.inspector.configuration.InspectorConfiguration;
 
 import java.io.IOException;
 
@@ -34,8 +34,8 @@ public class Inspector {
                 throw new MissingArgumentException("config");
             }
 
-            Configuration.initialize(cmd.getOptionValue("config"));
-            Configuration config = Configuration.getInstance();
+            InspectorConfiguration.initialize(cmd.getOptionValue("config"));
+            InspectorConfiguration config = InspectorConfiguration.getInstance();
 
             setLoggerLevel(config);
 
@@ -70,7 +70,7 @@ public class Inspector {
         Configurator.setLevel("org.reflections", Level.OFF);
     }
 
-    private static void setLoggerLevel(Configuration config){
+    private static void setLoggerLevel(InspectorConfiguration config){
         LoggerContext context = (LoggerContext) LogManager.getContext(false);
         org.apache.logging.log4j.core.config.Configuration log4jConfig = context.getConfiguration();
         LoggerConfig loggerConfig = log4jConfig.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
@@ -83,7 +83,7 @@ public class Inspector {
         return LogManager.getLogger(Inspector.class);
     }
 
-    private static Level getLoggerLevel(Configuration config){
+    private static Level getLoggerLevel(InspectorConfiguration config){
         String level = config != null ? config.getLoggerLevel().toUpperCase() : "";
 
         Level loggerLevel;
