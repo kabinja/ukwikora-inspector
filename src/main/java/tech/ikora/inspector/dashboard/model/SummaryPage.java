@@ -1,6 +1,5 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.clones.Clone;
 import tech.ikora.analytics.clones.Clones;
 import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.Project;
@@ -192,7 +191,7 @@ public class SummaryPage extends Page {
         int loc = 0;
 
         for(UserKeyword keyword: project.getUserKeywords()){
-            if(clones.getCloneType(keyword) != Clone.Type.NONE){
+            if(clones.getCloneType(keyword) != Clones.Type.NONE){
                 loc += keyword.getLoc();
             }
         }

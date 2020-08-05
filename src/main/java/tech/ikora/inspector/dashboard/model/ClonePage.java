@@ -19,7 +19,7 @@ public class ClonePage extends Page {
         int i = 0;
         for(CloneCluster<KeywordDefinition> cluster: clones.getClusters()){
             int size = cluster.size();
-            for(KeywordDefinition clone: cluster.getClones()){
+            for(KeywordDefinition clone: cluster){
                 this.table.addRow(new String[]{
                         String.valueOf(i),
                         String.valueOf(size),

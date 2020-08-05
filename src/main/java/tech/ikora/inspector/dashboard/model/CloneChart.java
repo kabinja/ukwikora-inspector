@@ -1,6 +1,5 @@
 package tech.ikora.inspector.dashboard.model;
 
-import tech.ikora.analytics.clones.Clone;
 import tech.ikora.analytics.clones.Clones;
 import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.UserKeyword;
@@ -15,10 +14,10 @@ public class CloneChart {
         int linesOfCode = getLinesOfCode(keywords);
 
         List<Double> values = new ArrayList<>(4);
-        values.add(getPercentageClones(Clone.Type.TYPE_1, clones, keywords, linesOfCode));
-        values.add(getPercentageClones(Clone.Type.TYPE_2, clones, keywords, linesOfCode));
-        values.add(getPercentageClones(Clone.Type.TYPE_3, clones, keywords, linesOfCode));
-        values.add(getPercentageClones(Clone.Type.TYPE_4, clones, keywords, linesOfCode));
+        values.add(getPercentageClones(Clones.Type.TYPE_1, clones, keywords, linesOfCode));
+        values.add(getPercentageClones(Clones.Type.TYPE_2, clones, keywords, linesOfCode));
+        values.add(getPercentageClones(Clones.Type.TYPE_3, clones, keywords, linesOfCode));
+        values.add(getPercentageClones(Clones.Type.TYPE_4, clones, keywords, linesOfCode));
 
         List<String> labels = new ArrayList<>();
         labels.add("Type I");
@@ -45,7 +44,7 @@ public class CloneChart {
                 .sum();
     }
 
-    private static double getPercentageClones(Clone.Type type, Clones<KeywordDefinition> clones, Set<UserKeyword> keywords, int linesOfCode){
+    private static double getPercentageClones(Clones.Type type, Clones<KeywordDefinition> clones, Set<UserKeyword> keywords, int linesOfCode){
         double numberOfCloneLines = 0;
 
         for(UserKeyword keyword: keywords){
