@@ -2,6 +2,7 @@ package tech.ikora.inspector.dashboard.model;
 
 import tech.ikora.analytics.clones.Clone;
 import tech.ikora.analytics.clones.Clones;
+import tech.ikora.model.KeywordDefinition;
 import tech.ikora.model.UserKeyword;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 public class CloneChart {
-    public static BarChart create(String prefixId, Set<UserKeyword> keywords, Clones<UserKeyword> clones) throws IOException {
+    public static BarChart create(String prefixId, Set<UserKeyword> keywords, Clones<KeywordDefinition> clones) throws IOException {
         int linesOfCode = getLinesOfCode(keywords);
 
         List<Double> values = new ArrayList<>(4);
@@ -44,7 +45,7 @@ public class CloneChart {
                 .sum();
     }
 
-    private static double getPercentageClones(Clone.Type type, Clones<UserKeyword> clones, Set<UserKeyword> keywords, int linesOfCode){
+    private static double getPercentageClones(Clone.Type type, Clones<KeywordDefinition> clones, Set<UserKeyword> keywords, int linesOfCode){
         double numberOfCloneLines = 0;
 
         for(UserKeyword keyword: keywords){

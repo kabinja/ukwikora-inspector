@@ -10,8 +10,8 @@ import tech.ikora.gitloader.Api;
 import tech.ikora.gitloader.GitEngine;
 import tech.ikora.gitloader.GitEngineFactory;
 import tech.ikora.gitloader.git.LocalRepository;
-import tech.ikora.inspector.configuration.Configuration;
 import tech.ikora.inspector.configuration.Gitlab;
+import tech.ikora.inspector.configuration.InspectorConfiguration;
 import tech.ikora.inspector.dashboard.StatisticsViewerGenerator;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class ProjectAnalyticsCli {
         Instant start = Instant.now();
 
         // read configuration and setup system
-        Configuration config = Configuration.getInstance();
+        InspectorConfiguration config = InspectorConfiguration.getInstance();
         Set<File> location = getLocation(config);
         File outputDir = new File(config.getOutputDirectory());
 
@@ -57,7 +57,7 @@ public class ProjectAnalyticsCli {
         logger.info(String.format("Analysis performed in %d ms", end));
     }
 
-    private Set<File> getLocation(Configuration configuration) throws Exception {
+    private Set<File> getLocation(InspectorConfiguration configuration) throws Exception {
         Set<File> location;
 
         if(configuration.isGitLab()){
