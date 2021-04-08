@@ -2,7 +2,6 @@ package lu.uni.serval.ikora.inspector.dashboard;
 
 import freemarker.template.*;
 import lu.uni.serval.ikora.inspector.dashboard.model.*;
-import org.joda.time.DateTime;
 import lu.uni.serval.ikora.core.analytics.clones.Clones;
 import lu.uni.serval.ikora.core.analytics.clones.KeywordCloneDetection;
 import lu.uni.serval.ikora.core.model.KeywordDefinition;
@@ -12,6 +11,8 @@ import lu.uni.serval.ikora.core.utils.FileUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StatisticsViewerGenerator {
@@ -26,10 +27,12 @@ public class StatisticsViewerGenerator {
     public void generate() throws Exception {
         Clones<KeywordDefinition> clones = computeClones();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         SideBar sideBar = new SideBar(projects);
         Map<String, Object> input = new HashMap<>();
         input.put("sidebar", sideBar);
-        input.put("generated_date", DateTime.now().toLocalDate().toString());
+        input.put("generated_date", LocalDateTime.now().format(formatter));
 
         FileUtils.copyResources(getClass(),"static", destination);
         generateDocumentationPage(new HashMap<>(input));
